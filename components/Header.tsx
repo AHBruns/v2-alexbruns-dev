@@ -4,7 +4,7 @@ import Link from "next/link";
 function Header() {
   return (
     <>
-      <div className="fixed inset-x-0 top-0 right-fade">
+      <div className="right-fade">
         <div className="fixed top-0 left-0 right-0 h-12 overflow-x-auto /bg-white bg-blur">
           <div className="absolute top-0 left-0 flex items-center h-12 px-6 space-x-4 text-lg font-light text-gray-700 whitespace-no-wrap">
             <Link href="/">

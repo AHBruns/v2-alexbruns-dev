@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["./pages/**/*"],
+  purge: ["./pages/**/*", "./components/**/*"],
   theme: {
     extend: {
       backgroundOpacity: ["responsive", "hover", "focus", "group-hover"],
