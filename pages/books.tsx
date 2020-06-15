@@ -7,7 +7,7 @@ function Books({}) {
     {
       timestamp: 1592204543000,
       title: "Harry Potter and The Sorcerer's Stone",
-      url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
+      url: "/books/harry-potter-and-the-sorcerer's-stone",
     },
   ];
 
