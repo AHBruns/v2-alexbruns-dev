@@ -1,6 +1,5 @@
 import Title from "../components/Title";
 import PageBorder from "../components/PageBorder";
-import fs from "fs";
 import Link from "next/link";
 import { GetServerSidePropsContext } from "next";
 
@@ -11,7 +10,7 @@ function Books({ books }) {
       {books?.length ? (
         <ul className="pl-6 list-disc">
           {books.map(({ title, timestamp, url }) => (
-            <Link href={`/books/${url}`}>
+            <Link href={url}>
               <a>
                 <li className="tracking-wider text-gray-700 text-lighter">
                   {title}{" "}
@@ -39,7 +38,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         {
           timestamp: 1592204543000,
           title: "Harry Potter and The Sorcerer's Stone",
-          url: "harry-potter-and-the-sorcerer's-stone",
+          url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
         },
       ],
     },

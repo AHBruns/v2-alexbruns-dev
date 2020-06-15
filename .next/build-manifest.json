@@ -1,55 +1,32 @@
 {
-  "devFiles": [],
+  "devFiles": [
+    "static/runtime/react-refresh.js",
+    "static/development/dll/dll_f9de5cbc314a1e41f91e.js",
+    "static/development/dll/dll_f9de5cbc314a1e41f91e.js.map"
+  ],
   "lowPriorityFiles": [
-    "static/H0nYJtw4v0_lnMn0MGQZ5/_buildManifest.js",
-    "static/H0nYJtw4v0_lnMn0MGQZ5/_ssgManifest.js"
+    "static/development/_buildManifest.js",
+    "static/development/_ssgManifest.js"
   ],
   "pages": {
-    "/": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
-    ],
     "/_app": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/chunks/a962b3c459a67ab4fa98d1896fba7730558a0072.36a881b4253e934d1e53.js",
-      "static/css/5cc1c26b526b69e192e1.css",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_error": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_polyfills": [
-      "static/runtime/polyfills-788a592a52ba46c11fcc.js"
+      "static/runtime/polyfills.js"
     ],
     "/books": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/chunks/a962b3c459a67ab4fa98d1896fba7730558a0072.36a881b4253e934d1e53.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/books/harry-potter-and-the-sorcerer's-stone": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
-    ],
-    "/index": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
-    ],
-    "/philosophy": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
-    ],
-    "/programming": [
-      "static/runtime/webpack-c212667a5f965e81e004.js",
-      "static/chunks/framework.c6faae2799416a6da8e8.js",
-      "static/runtime/main-62738c37a1e78c9698a5.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }
