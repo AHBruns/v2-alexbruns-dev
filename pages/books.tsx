@@ -1,9 +1,16 @@
 import Title from "../components/Title";
 import PageBorder from "../components/PageBorder";
 import Link from "next/link";
-import { GetServerSidePropsContext } from "next";
 
-function Books({ books }) {
+function Books({}) {
+  const books = [
+    {
+      timestamp: 1592204543000,
+      title: "Harry Potter and The Sorcerer's Stone",
+      url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
+    },
+  ];
+
   return (
     <PageBorder>
       <Title>Books</Title>
@@ -31,18 +38,18 @@ function Books({ books }) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: {
-      books: [
-        {
-          timestamp: 1592204543000,
-          title: "Harry Potter and The Sorcerer's Stone",
-          url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
-        },
-      ],
-    },
-  };
-}
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   return {
+//     props: {
+//       books: [
+//         {
+//           timestamp: 1592204543000,
+//           title: "Harry Potter and The Sorcerer's Stone",
+//           url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
+//         },
+//       ],
+//     },
+//   };
+// }
 
 export default Books;
