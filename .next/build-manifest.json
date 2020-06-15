@@ -23,10 +23,6 @@
     "/books": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
-    ],
-    "/books/harry-potter-and-the-sorcerer's-stone": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
     ]
   }
 }

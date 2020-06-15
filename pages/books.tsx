@@ -7,7 +7,7 @@ function Books({}) {
     <PageBorder>
       <Title>Books</Title>
       <ul className="pl-6 list-disc">
-        <Link href="/books/harry-potter-and-the-sorcerer's-stone">
+        <Link href="/books/harry-potter-and-the-sorcerers-stone">
           <a>
             <li className="tracking-wider text-gray-700 text-lighter">
               {"Harry Potter and The Sorcerer's Stone"}{" "}
@@ -24,19 +24,5 @@ function Books({}) {
     </PageBorder>
   );
 }
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   return {
-//     props: {
-//       books: [
-//         {
-//           timestamp: 1592204543000,
-//           title: "Harry Potter and The Sorcerer's Stone",
-//           url: "/books/" + "harry-potter-and-the-sorcerer's-stone",
-//         },
-//       ],
-//     },
-//   };
-// }
 
 export default Books;
