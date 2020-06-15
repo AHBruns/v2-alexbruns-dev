@@ -18,9 +18,6 @@ function Books({}) {
           </a>
         </Link>
       </ul>
-      <p className="tracking-wider text-gray-700 text-lighter">
-        Nothing here yet. Check back soon, I guess.
-      </p>
     </PageBorder>
   );
 }
