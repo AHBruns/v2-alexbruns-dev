@@ -17,11 +17,8 @@ function Index() {
           here
         </a>
         . This new website is more focused on my personal interests. You'll find
-        info about <strong className="font-semibold">books</strong> I'm reading,{" "}
-        <strong className="font-semibold">programming</strong> stuff I'm
-        tinkering with, and possibly some{" "}
-        <strong className="font-semibold">politics & philosophy</strong> (not
-        sure about this one yet).
+        info about books I have read or am reading, as well as much, much more
+        (when I get around to it).
       </p>
     </div>
   );
