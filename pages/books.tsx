@@ -16,6 +16,7 @@ function Books({
   }[];
 }) {
   // books.reverse();
+  console.log(books);
   return (
     <>
       <ul className="py-4 space-y-4">
