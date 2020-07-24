@@ -71,67 +71,64 @@ export const getStaticProps: GetStaticProps = async (context) => {
     {
       title: "Harry Potter and the Sorcerer's Stone",
       author: "J.K. Rowling",
-
-      startDate: "2020-06-17",
-      endDate: "2020-06-24",
+      startDate: "17 June 2020",
+      endDate: "24 Jun 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Chamber of Secrets",
       author: "J.K. Rowling",
-
-      startDate: "2020-06-24",
-      endDate: "2020-06-28",
+      startDate: "24 Jun 2020",
+      endDate: "28 Jun 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Prisoner of Azkaban",
       author: "J.K. Rowling",
-      startDate: "2020-06-28",
-      endDate: "2020-07-01",
+      startDate: "28 Jun 2020",
+      endDate: "1 Jul 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Goblet of Fire",
       author: "J.K. Rowling",
-
-      startDate: "2020-07-01",
-      endDate: "2020-07-07",
+      startDate: "1 Jul 2020",
+      endDate: "7 Jul 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Order of the Phoenix",
       author: "J.K. Rowling",
-      startDate: "2020-07-07",
-      endDate: "2020-07-11",
+      startDate: "7 Jul 2020",
+      endDate: "11 Jul 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Half-Blood Prince",
       author: "J.K. Rowling",
-      startDate: "2020-07-11",
-      endDate: "2020-07-13",
+      startDate: "11 Jul 2020",
+      endDate: "13 Jul 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title: "Harry Potter and the Deathly Hallows",
       author: "J.K. Rowling",
-      startDate: "2020-07-13",
-      endDate: "2020-07-17",
+      startDate: "13 Jul 2020",
+      endDate: "17 Jul 2020",
       genres: ["Fantasy", "YA"],
     },
     {
       title:
         "Dealers of Lightning: Xerox PARC and the Dawn of the Computer Age",
       author: "Michael A. Hiltzik",
-      startDate: "2020-07-17",
+      startDate: "17 Jul 2020",
       genres: ["Nonfiction", "History"],
     },
   ];
-  books.forEach((book) => {
-    if (book.startDate) book.startDate += " GMT-0500";
-    if (book.endDate) book.endDate += " GMT-0500";
-  });
+  // books.forEach((book) => {
+  //   if (book.startDate) book.startDate += " GMT-0500";
+  //   if (book.endDate) book.endDate += " GMT-0500";
+  // });
   return {
     props: {
       lastUpdated: new Date(Date.now()).toString(),
