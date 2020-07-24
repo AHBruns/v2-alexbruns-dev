@@ -15,12 +15,10 @@ function Books({
     genres: Genre[];
   }[];
 }) {
-  // books.reverse();
-  console.log(books);
   return (
     <>
       <ul className="py-4 space-y-4">
-        {books.reverse().map((book, i) => {
+        {books.map((book, i) => {
           return (
             <li
               key={i}
@@ -127,10 +125,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       genres: ["Nonfiction", "History"],
     },
   ];
-  // books.forEach((book) => {
-  //   if (book.startDate) book.startDate += " GMT-0500";
-  //   if (book.endDate) book.endDate += " GMT-0500";
-  // });
+  books.reverse();
   return {
     props: {
       lastUpdated: new Date(Date.now()).toString(),
