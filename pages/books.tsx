@@ -15,11 +15,11 @@ function Books({
     genres: Genre[];
   }[];
 }) {
-  books.reverse();
+  // books.reverse();
   return (
     <>
       <ul className="py-4 space-y-4">
-        {books.map((book, i) => {
+        {books.reverse().map((book, i) => {
           return (
             <li
               key={i}
