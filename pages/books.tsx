@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 
-type Genre = "Fantasy" | "YA" | "Nonfiction" | "History";
+type Genre = "Fantasy" | "Young Adult" | "Nonfiction" | "History" | "Business";
 
 function Books({
   lastUpdated,
@@ -28,14 +28,14 @@ function Books({
                 {new Date(book.startDate).toDateString()}
                 {" - "}
                 {book.endDate
-                  ? new Date(book.startDate).toDateString()
+                  ? new Date(book.endDate).toDateString()
                   : "In Progress"}
               </p>
               <p className="space-x-2">
                 {book.genres.map((genre, i) => (
                   <span
                     key={i}
-                    className="px-2 py-1 text-xs text-white bg-gray-700 rounded-full shadow-sm"
+                    className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-sm"
                   >
                     {genre}
                   </span>
@@ -73,56 +73,64 @@ export const getStaticProps: GetStaticProps = async (context) => {
       author: "J.K. Rowling",
       startDate: "17 June 2020",
       endDate: "24 Jun 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Chamber of Secrets",
       author: "J.K. Rowling",
       startDate: "24 Jun 2020",
       endDate: "28 Jun 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Prisoner of Azkaban",
       author: "J.K. Rowling",
       startDate: "28 Jun 2020",
       endDate: "1 Jul 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Goblet of Fire",
       author: "J.K. Rowling",
       startDate: "1 Jul 2020",
       endDate: "7 Jul 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Order of the Phoenix",
       author: "J.K. Rowling",
       startDate: "7 Jul 2020",
       endDate: "11 Jul 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Half-Blood Prince",
       author: "J.K. Rowling",
       startDate: "11 Jul 2020",
       endDate: "13 Jul 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title: "Harry Potter and the Deathly Hallows",
       author: "J.K. Rowling",
       startDate: "13 Jul 2020",
       endDate: "17 Jul 2020",
-      genres: ["Fantasy", "YA"],
+      genres: ["Fantasy", "Young Adult"],
     },
     {
       title:
         "Dealers of Lightning: Xerox PARC and the Dawn of the Computer Age",
       author: "Michael A. Hiltzik",
       startDate: "17 Jul 2020",
+      endDate: "25 Jul 2020",
       genres: ["Nonfiction", "History"],
+    },
+    {
+      title:
+        "Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs",
+      author: "John Doerr",
+      startDate: "25 Jul 2020",
+      genres: ["Nonfiction", "Business"],
     },
   ];
   books.reverse();
