@@ -17,8 +17,8 @@ function Index() {
           here
         </a>
         . This new website is more focused on my personal interests. You'll find
-        info about books I have read or am reading, as well as much, much more
-        (when I get around to it).
+        info about books I have read or am reading, as well as much more (when I
+        get around to it).
       </p>
     </div>
   );
