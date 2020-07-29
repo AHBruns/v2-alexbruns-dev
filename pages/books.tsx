@@ -130,7 +130,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
         "Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs",
       author: "John Doerr",
       startDate: "25 Jul 2020",
+      endDate: "27 Jul 2020",
       genres: ["Nonfiction", "Business"],
+    },
+    {
+      title: "The Lightning Thief",
+      author: "Rick Riordan",
+      startDate: "27 Jul 2020",
+      genres: ["Fantasy", "Young Adult"],
     },
   ];
   books.reverse();
