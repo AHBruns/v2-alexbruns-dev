@@ -83,7 +83,7 @@ function Books({
               ) : (
                 <div
                   key={i}
-                  className="p-3 space-y-3 bg-gray-100 border border-gray-300 rounded-lg shadow-md /bg-opacity-50"
+                  className="p-3 space-y-3 bg-gray-100 border border-gray-300 rounded-md shadow-md"
                 >
                   <p
                     onClick={() =>
