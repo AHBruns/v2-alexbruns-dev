@@ -10,6 +10,7 @@ function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </div>
       <Header />
+      <script> </script>
     </>
   );
 }
