@@ -25,7 +25,7 @@ function Books({
           className="fixed z-20 px-4 py-2 text-white bg-gray-800 rounded-full hover:bg-gray-700 focus:outline-none focus:shadow-outline left-4 bottom-4"
           onClick={() => setFilters({})}
         >
-          Reset Filters
+          Stop Filtering
         </button>
       )}
       <div className="flex flex-col">
@@ -36,11 +36,26 @@ function Books({
                 filters.series === undefined || book.series === filters.series
               );
             })
-            .map((book, i) => {
-              const bookElem = (
+            .reduce(
+              (acc, book) => {
+                if (acc[acc.length - 1].length === 0)
+                  acc[acc.length - 1].push(book);
+                else if (
+                  acc[acc.length - 1][0].series === undefined ||
+                  acc[acc.length - 1][0].series !== book.series
+                )
+                  acc.push([book]);
+                else acc[acc.length - 1].push(book);
+
+                return acc;
+              },
+              [[]]
+            )
+            .map((series, i) => {
+              const bookComps = series.map((book, j) => (
                 <li
-                  key={i}
-                  className="relative z-10 p-2 overflow-hidden tracking-wider text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-lg"
+                  key={i.toString() + "-" + j.toString()}
+                  className="relative z-10 p-2 overflow-hidden tracking-wider text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-md"
                 >
                   <p className="text-xs text-gray-500">
                     {new Date(book.startDate).toDateString()}
@@ -62,23 +77,28 @@ function Books({
                   <p className="text-lg">{book.title}</p>
                   <p className="text-sm text-gray-500">by {book.author}</p>
                 </li>
-              );
-              const wrappedBookElem = book.series ? (
-                <div className="p-3 space-y-3 bg-gray-100 border border-gray-300 rounded-lg shadow-lg">
+              ));
+              return series[0].series === undefined ? (
+                bookComps
+              ) : (
+                <div
+                  key={i}
+                  className="p-3 space-y-3 bg-gray-100 border border-gray-300 rounded-lg shadow-md /bg-opacity-50"
+                >
                   <p
                     onClick={() =>
-                      setFilters((prev) => ({ ...prev, series: book.series }))
+                      setFilters((prev) => ({
+                        ...prev,
+                        series: series[0].series,
+                      }))
                     }
-                    className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 rounded-md shadow-lg cursor-pointer magic-hover"
+                    className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 border border-gray-900 rounded-md shadow-md cursor-pointer magic-hover"
                   >
-                    {book.series}
+                    {series[0].series}
                   </p>
-                  {bookElem}
+                  {bookComps}
                 </div>
-              ) : (
-                bookElem
               );
-              return <div className="magic-hover">{wrappedBookElem}</div>;
             })}
         </ul>
         <p className="text-xs text-center text-gray-500">
