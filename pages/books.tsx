@@ -69,7 +69,7 @@ function Books({
                     onClick={() =>
                       setFilters((prev) => ({ ...prev, series: book.series }))
                     }
-                    className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 border border-gray-700 rounded-md shadow-lg cursor-pointer magic-hover"
+                    className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 rounded-md shadow-lg cursor-pointer magic-hover"
                   >
                     {book.series}
                   </p>
