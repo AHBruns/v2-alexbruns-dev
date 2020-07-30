@@ -209,6 +209,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       series: "Percy Jackson & the Olympians",
       author: "Rick Riordan",
       startDate: "27 Jul 2020",
+      endDate: "29 Jul 2020",
+      genres: ["Fantasy", "Young Adult"],
+    },
+    {
+      title: "The Sea of Monsters",
+      series: "Percy Jackson & the Olympians",
+      author: "Rick Riordan",
+      startDate: "29 Jul 2020",
       genres: ["Fantasy", "Young Adult"],
     },
   ];
