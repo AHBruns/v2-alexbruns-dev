@@ -1,7 +1,14 @@
 import { GetStaticProps } from "next";
 import { useState } from "react";
 
-type Genre = "Fantasy" | "Young Adult" | "Nonfiction" | "History" | "Business";
+type Genre =
+  | "Fantasy"
+  | "Young Adult"
+  | "Nonfiction"
+  | "History"
+  | "Business"
+  | "Science Fiction"
+  | "Classic";
 
 function Books({
   lastUpdated,
@@ -217,6 +224,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
       series: "Percy Jackson & the Olympians",
       author: "Rick Riordan",
       startDate: "29 Jul 2020",
+      endDate: "30 Jul 2020",
+      genres: ["Fantasy", "Young Adult"],
+    },
+    {
+      title: "The Time Machine",
+      author: "H.G. Wells",
+      startDate: "31 Jul 2020",
+      endDate: "31 Jul 2020",
+      genres: ["Science Fiction", "Classic"],
+    },
+    {
+      title: "The Titan's Curse",
+      series: "Percy Jackson & the Olympians",
+      author: "Rick Riordan",
+      startDate: "31 Jul 2020",
       genres: ["Fantasy", "Young Adult"],
     },
   ];
