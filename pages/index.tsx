@@ -2,7 +2,7 @@ import React from "react";
 
 function Index() {
   return (
-    <div className="flex flex-col items-center justify-center h-full space-y-4">
+    <div className="absolute flex flex-col items-center justify-center space-y-4 inset-4">
       <h1 className="text-4xl font-semibold tracking-widest text-gray-700">
         Welcome
       </h1>
