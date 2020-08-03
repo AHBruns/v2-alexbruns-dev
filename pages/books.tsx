@@ -141,7 +141,7 @@ function Books({
               )}
               {filters.author && (
                 <li>
-                  • Restricting results to books with author's names containing{" "}
+                  • Restricting results to books with author names containing{" "}
                   <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
                     {filters.author}
                   </span>
