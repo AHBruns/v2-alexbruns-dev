@@ -325,7 +325,7 @@ function Books({
             filters.genre ||
             filters.universal) && (
             <button
-              className="fixed z-20 px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:outline-none focus:shadow-outline left-4 bottom-4"
+              className="fixed z-20 px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:outline-none focus:shadow-outline left-2 bottom-2"
               onClick={() => setFilters({})}
             >
               Stop Filtering
