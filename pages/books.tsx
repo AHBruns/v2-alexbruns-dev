@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import { useState } from "react";
 
-const FEATURE_SEARCH_BAR = false;
+const FEATURE_SEARCH_BAR = true;
 
 type Genre =
   | "Fantasy"
@@ -26,27 +26,194 @@ function Books({
     genres: Genre[];
   }[];
 }) {
-  const [filters, setFilters] = useState({ series: undefined } as any);
+  const [filters, setFilters] = useState({
+    series: undefined,
+    author: undefined,
+    title: undefined,
+    genre: undefined,
+    universal: undefined,
+  } as any);
+  const [query, setQuery] = useState("");
+
+  function handleQuerySubmission() {
+    const cleanedQuery = query.toLowerCase().replace(/\s+/g, " ").split(" ");
+    switch (cleanedQuery[0]) {
+      case ":help":
+        alert(
+          'Type ":help" to get this dialogue again.\n\nPreface a search with ":series" to search by series.\n\nPreface a search with ":author" to search by author.\n\nPreface a search with ":title" to search by title.\n\nPreface a search with ":genre" to search by genre. Genres must be exact matches.\n\nPreface a search with ":universal" to search all filter fields at once. By default, any unprefaced search is considered to be a universal search.\n\nTo clear a filter field use the ":clear" prefix followed by the filter field you\'d like to clear. EX: ":clear :title". Additionally, typing ":clear" alone will clear all filter fields.'
+        );
+        break;
+      case ":clear":
+        switch (cleanedQuery[1]) {
+          case undefined:
+            setFilters({});
+            break;
+          case ":series":
+            setFilters((prev) => ({ ...prev, series: undefined }));
+            break;
+          case ":author":
+            setFilters((prev) => ({ ...prev, author: undefined }));
+            break;
+          case ":title":
+            setFilters((prev) => ({ ...prev, title: undefined }));
+            break;
+          case ":genre":
+            setFilters((prev) => ({ ...prev, genre: undefined }));
+            break;
+          case ":universal":
+            setFilters((prev) => ({ ...prev, universal: undefined }));
+            break;
+          default:
+            alert(
+              "Looks like you tried to clear a filter param that doesn't exist. Your options are: :series, :author, :title, :genre, or :universal."
+            );
+        }
+        break;
+      case ":series":
+        setFilters((prev) => ({
+          ...prev,
+          series: cleanedQuery.slice(1).join(" "),
+        }));
+        break;
+      case ":author":
+        setFilters((prev) => ({
+          ...prev,
+          author: cleanedQuery.slice(1).join(" "),
+        }));
+        break;
+      case ":title":
+        setFilters((prev) => ({
+          ...prev,
+          title: cleanedQuery.slice(1).join(" "),
+        }));
+        break;
+      case ":genre":
+        setFilters((prev) => ({
+          ...prev,
+          genre: cleanedQuery.slice(1).join(" "),
+        }));
+        break;
+      case ":universal":
+      default:
+        setFilters((prev) => ({
+          ...prev,
+          universal: cleanedQuery.join(" "),
+        }));
+    }
+    setQuery("");
+  }
+
   return (
     <>
       {FEATURE_SEARCH_BAR && (
-        <div className="sticky top-0 z-20 pt-2 mx-2 bg-white">
+        <div className="sticky top-0 z-20 pt-2 mx-2 space-y-2 bg-white">
           <div className="flex flex-wrap items-center p-1 bg-gray-100 border border-gray-300 rounded-lg shadow-lg">
             <input
               placeholder="type `:help` to get started"
+              value={query}
+              onKeyUp={(e) => {
+                if (e.which === 13) handleQuerySubmission();
+              }}
+              onChange={(e) => setQuery(e.target.value)}
               className="flex-1 px-3 py-2 m-1 text-sm text-white bg-gray-800 border border-gray-600 rounded-md shadow-inner hover:bg-gray-900 focus:bg-gray-900 focus:shadow-outline-blue focus:outline-none"
             />
-            <button className="px-2 py-1 m-1 font-bold tracking-wider text-gray-700 hover:text-gray-800 focus:text-gray-800 focus:outline-none">
+            {/* <button
+              onClick={handleQuerySubmission}
+              className="px-2 py-1 m-1 font-bold tracking-wider text-gray-700 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
+            >
               Search
-            </button>
+            </button> */}
           </div>
+          {(filters.title ||
+            filters.author ||
+            filters.series ||
+            filters.universal ||
+            filters.genre) && (
+            <ul className="flex flex-col p-4 space-y-2 text-sm tracking-wider text-gray-800 bg-gray-100 border border-gray-300 rounded-lg shadow-lg">
+              {filters.title && (
+                <li>
+                  • Restricting results to books with titles containing{" "}
+                  <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
+                    {filters.title}
+                  </span>
+                  .
+                </li>
+              )}
+              {filters.author && (
+                <li>
+                  • Restricting results to books with author's names containing{" "}
+                  <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
+                    {filters.author}
+                  </span>
+                  .
+                </li>
+              )}
+              {filters.series && (
+                <li>
+                  • Restricting results to books with series names containing{" "}
+                  <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
+                    {filters.series}
+                  </span>
+                  .
+                </li>
+              )}
+              {filters.genre && (
+                <li>
+                  • Restricting results to books tagged with a genre matching{" "}
+                  <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
+                    {filters.genre}
+                  </span>
+                  .
+                </li>
+              )}
+              {filters.universal && (
+                <li>
+                  • Restricting results to books with <strong>any</strong>{" "}
+                  metadata containing{" "}
+                  <span className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md">
+                    {filters.universal}
+                  </span>
+                  .
+                </li>
+              )}
+            </ul>
+          )}
         </div>
       )}
       <div className="flex flex-col p-4 space-y-4">
         {books
           .filter((book) => {
             return (
-              filters.series === undefined || book.series === filters.series
+              filters.series === undefined ||
+              book.series?.toLowerCase().includes(filters.series)
+            );
+          })
+          .filter((book) => {
+            return (
+              filters.author === undefined ||
+              book.author.toLowerCase().includes(filters.author)
+            );
+          })
+          .filter((book) => {
+            return (
+              filters.title === undefined ||
+              book.title.toLowerCase().includes(filters.title)
+            );
+          })
+          .filter((book) => {
+            return (
+              filters.genre === undefined ||
+              book.genres.map((_) => _.toLowerCase()).includes(filters.genre)
+            );
+          })
+          .filter((book) => {
+            return (
+              filters.universal === undefined ||
+              `${book.series} ${book.title} ${book.author} ${book.genres.join(
+                " | "
+              )}`
+                .toLowerCase()
+                .includes(filters.universal)
             );
           })
           .reduce(
@@ -81,17 +248,43 @@ function Books({
                   {book.genres.map((genre, i) => (
                     <span
                       key={i}
-                      className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-sm"
+                      className="px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-800"
+                      onClick={() =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          genre: genre.toLowerCase(),
+                        }))
+                      }
                     >
                       {genre}
                     </span>
                   ))}
                 </p>
-                <p className="text-lg">{book.title}</p>
-                <p className="text-sm text-gray-500">by {book.author}</p>
+                <p
+                  className="text-lg cursor-pointer hover:text-gray-800"
+                  onClick={() =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      title: book.title.toLowerCase(),
+                    }))
+                  }
+                >
+                  {book.title}
+                </p>
+                <p
+                  className="text-sm text-gray-500 cursor-pointer hover:text-gray-600"
+                  onClick={() =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      author: book.author.toLowerCase(),
+                    }))
+                  }
+                >
+                  by {book.author}
+                </p>
               </div>
             ));
-            return series[0].series === undefined ? (
+            return series?.[0]?.series === undefined ? (
               bookComps
             ) : (
               <div
@@ -102,10 +295,10 @@ function Books({
                   onClick={() =>
                     setFilters((prev) => ({
                       ...prev,
-                      series: series[0].series,
+                      series: series[0].series.toLowerCase(),
                     }))
                   }
-                  className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 border border-gray-900 rounded-md shadow-md cursor-pointer magic-hover"
+                  className="z-0 p-2 mr-auto tracking-wider text-gray-100 bg-gray-700 border border-gray-900 rounded-md shadow-md cursor-pointer hover:bg-gray-800 magic-hover"
                 >
                   {series[0].series}
                 </p>
@@ -124,9 +317,13 @@ function Books({
         </p>
         <div className="self-center w-full max-w-md border-b border-gray-100 " />
       </div>
-      <div className="sticky bottom-0 h-0">
+      <div className="sticky bottom-0 z-20 h-0">
         <div className="absolute bottom-2 inset-x-2">
-          {filters.series && (
+          {(filters.series ||
+            filters.title ||
+            filters.author ||
+            filters.genre ||
+            filters.universal) && (
             <button
               className="fixed z-20 px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:outline-none focus:shadow-outline left-4 bottom-4"
               onClick={() => setFilters({})}
