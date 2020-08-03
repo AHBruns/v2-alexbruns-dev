@@ -235,7 +235,7 @@ function Books({
             const bookComps = series.map((book, j) => (
               <div
                 key={i.toString() + "-" + j.toString()}
-                className="relative z-10 p-2 overflow-hidden tracking-wider text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-md"
+                className="z-10 flex-none p-2 overflow-hidden tracking-wider text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-md "
               >
                 <p className="text-xs text-gray-500">
                   {new Date(book.startDate).toDateString()}
