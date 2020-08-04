@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import { useState } from "react";
+import Notion from "notion-api-js";
 
 const FEATURE_SEARCH_BAR = true;
 
@@ -284,7 +285,7 @@ function Books({
                 </p>
               </div>
             ));
-            return series?.[0]?.series === undefined ? (
+            return series?.[0]?.series === null ? (
               bookComps
             ) : (
               <div
@@ -338,132 +339,201 @@ function Books({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const books: {
-    title: string;
-    author: string;
-    series?: string;
-    startDate: string;
-    endDate?: string;
-    genres: Genre[];
-  }[] = [
-    {
-      title: "Harry Potter and the Sorcerer's Stone",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "17 June 2020",
-      endDate: "24 Jun 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Chamber of Secrets",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "24 Jun 2020",
-      endDate: "28 Jun 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Prisoner of Azkaban",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "28 Jun 2020",
-      endDate: "1 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Goblet of Fire",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "1 Jul 2020",
-      endDate: "7 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Order of the Phoenix",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "7 Jul 2020",
-      endDate: "11 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Half-Blood Prince",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "11 Jul 2020",
-      endDate: "13 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "Harry Potter and the Deathly Hallows",
-      author: "J.K. Rowling",
-      series: "Harry Potter",
-      startDate: "13 Jul 2020",
-      endDate: "17 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title:
-        "Dealers of Lightning: Xerox PARC and the Dawn of the Computer Age",
-      author: "Michael A. Hiltzik",
-      startDate: "17 Jul 2020",
-      endDate: "25 Jul 2020",
-      genres: ["Nonfiction", "History"],
-    },
-    {
-      title:
-        "Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs",
-      author: "John Doerr",
-      startDate: "25 Jul 2020",
-      endDate: "27 Jul 2020",
-      genres: ["Nonfiction", "Business"],
-    },
-    {
-      title: "The Lightning Thief",
-      series: "Percy Jackson & the Olympians",
-      author: "Rick Riordan",
-      startDate: "27 Jul 2020",
-      endDate: "29 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "The Sea of Monsters",
-      series: "Percy Jackson & the Olympians",
-      author: "Rick Riordan",
-      startDate: "29 Jul 2020",
-      endDate: "30 Jul 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "The Time Machine",
-      author: "H.G. Wells",
-      startDate: "31 Jul 2020",
-      endDate: "31 Jul 2020",
-      genres: ["Science Fiction", "Classic"],
-    },
-    {
-      title: "The Titan's Curse",
-      series: "Percy Jackson & the Olympians",
-      author: "Rick Riordan",
-      startDate: "31 Jul 2020",
-      endDate: "2 Aug 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-    {
-      title: "The Battle of the Labyrinth",
-      series: "Percy Jackson & the Olympians",
-      author: "Rick Riordan",
-      startDate: "2 Aug 2020",
-      genres: ["Fantasy", "Young Adult"],
-    },
-  ];
-  books.reverse();
+  const {
+    recordMap: { collection, collection_view },
+  } = await (
+    await fetch("https://www.notion.so/api/v3/loadPageChunk", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pageId: "4526e059-e57b-4665-b15e-0798ef1b6ceb",
+        limit: 50,
+        cursor: {
+          stack: [
+            [
+              {
+                table: "block",
+                id: "4526e059-e57b-4665-b15e-0798ef1b6ceb",
+                index: 0,
+              },
+            ],
+          ],
+        },
+        chunkNumber: 0,
+        verticalColumns: false,
+      }),
+    })
+  ).json();
+  const [collectionId] = Object.keys(collection);
+  const [collectionViewId] = Object.keys(collection_view);
+  const books = Object.entries(
+    ((await (
+      await fetch("https://www.notion.so/api/v3/queryCollection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          collectionId,
+          collectionViewId,
+          query: {
+            sort: [{ property: "D}R(", direction: "descending" }],
+            aggregations: [{ property: "title", aggregator: "count" }],
+          },
+          loader: {
+            type: "table",
+            limit: 1000,
+            searchQuery: "",
+            userTimeZone: "America/Los_Angeles",
+            userLocale: "en",
+            loadContentCover: false,
+          },
+        }),
+      })
+    ).json()) as any).recordMap.block
+  )
+    .filter(([k, _]) => k != "4526e059-e57b-4665-b15e-0798ef1b6ceb")
+    .map(([_, v]) => v)
+    .map((v) => (v as any).value.properties)
+    .map((properties) => ({
+      author: properties[",O|&"][0][0],
+      genres: properties[";|F`"][0][0].split(","),
+      startDate: properties["D}R("][0][1][0][1].start_date,
+      endDate: properties["D}R("][0][1][0][1].end_date || null,
+      series: properties["N*\\="]?.[0]?.[0] || null,
+      title: properties["title"][0][0],
+    }));
+
   return {
     props: {
       lastUpdated: new Date(Date.now()).toString(),
       books,
     },
+    unstable_revalidate: 15,
   };
 };
 
 export default Books;
+
+// const books: {
+//   title: string;
+//   author: string;
+//   series?: string;
+//   startDate: string;
+//   endDate?: string;
+//   genres: Genre[];
+// }[] = [
+//   {
+//     title: "Harry Potter and the Sorcerer's Stone",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "17 June 2020",
+//     endDate: "24 Jun 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Chamber of Secrets",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "24 Jun 2020",
+//     endDate: "28 Jun 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Prisoner of Azkaban",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "28 Jun 2020",
+//     endDate: "1 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Goblet of Fire",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "1 Jul 2020",
+//     endDate: "7 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Order of the Phoenix",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "7 Jul 2020",
+//     endDate: "11 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Half-Blood Prince",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "11 Jul 2020",
+//     endDate: "13 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "Harry Potter and the Deathly Hallows",
+//     author: "J.K. Rowling",
+//     series: "Harry Potter",
+//     startDate: "13 Jul 2020",
+//     endDate: "17 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title:
+//       "Dealers of Lightning: Xerox PARC and the Dawn of the Computer Age",
+//     author: "Michael A. Hiltzik",
+//     startDate: "17 Jul 2020",
+//     endDate: "25 Jul 2020",
+//     genres: ["Nonfiction", "History"],
+//   },
+//   {
+//     title:
+//       "Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs",
+//     author: "John Doerr",
+//     startDate: "25 Jul 2020",
+//     endDate: "27 Jul 2020",
+//     genres: ["Nonfiction", "Business"],
+//   },
+//   {
+//     title: "The Lightning Thief",
+//     series: "Percy Jackson & the Olympians",
+//     author: "Rick Riordan",
+//     startDate: "27 Jul 2020",
+//     endDate: "29 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "The Sea of Monsters",
+//     series: "Percy Jackson & the Olympians",
+//     author: "Rick Riordan",
+//     startDate: "29 Jul 2020",
+//     endDate: "30 Jul 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "The Time Machine",
+//     author: "H.G. Wells",
+//     startDate: "31 Jul 2020",
+//     endDate: "31 Jul 2020",
+//     genres: ["Science Fiction", "Classic"],
+//   },
+//   {
+//     title: "The Titan's Curse",
+//     series: "Percy Jackson & the Olympians",
+//     author: "Rick Riordan",
+//     startDate: "31 Jul 2020",
+//     endDate: "2 Aug 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+//   {
+//     title: "The Battle of the Labyrinth",
+//     series: "Percy Jackson & the Olympians",
+//     author: "Rick Riordan",
+//     startDate: "2 Aug 2020",
+//     genres: ["Fantasy", "Young Adult"],
+//   },
+// ];
+// books.reverse();
