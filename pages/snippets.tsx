@@ -1,7 +1,6 @@
 import React from "react";
 import prettier from "prettier/standalone";
 import parser from "prettier/parser-typescript";
-import fs from "fs/promises";
 import Prism from "prismjs";
 
 function Snippets({ snippets }) {
@@ -45,7 +44,6 @@ function Snippets({ snippets }) {
 }
 
 export async function getStaticProps() {
-  console.log();
   return {
     props: {
       snippets: [
@@ -53,10 +51,15 @@ export async function getStaticProps() {
           title: "Array Separators",
           language: "Javascript",
           snippet: prettier.format(
-            await fs.readFile(
-              process.cwd() + "/public/snippets/arraySeparators.js",
-              { encoding: "utf-8" }
-            ),
+            `
+                function addSeparators(arr, sep) {
+                    const newArr = arr.flatMap((x) => {
+                        return [x, sep];
+                    });
+                    newArr.pop();
+                    return newArr;
+                }
+            `,
             {
               parser: "typescript",
               plugins: [parser],
