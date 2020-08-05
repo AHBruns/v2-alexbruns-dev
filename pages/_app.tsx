@@ -9,8 +9,11 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Alex Bruns</title>
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-funky.min.css"
+          rel="stylesheet"
+        />
       </Head>
-
       <div className="flex flex-col w-screen h-screen">
         <Header />
         <div className="relative flex-1 w-full">

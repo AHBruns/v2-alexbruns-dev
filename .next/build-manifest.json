@@ -23,6 +23,10 @@
     "/books": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
+    ],
+    "/snippets": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }
