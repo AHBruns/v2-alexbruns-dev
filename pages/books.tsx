@@ -285,7 +285,8 @@ function Books({
                 </p>
               </div>
             ));
-            return series?.[0]?.series === null ? (
+            return series?.[0]?.series === null ||
+              series?.[0]?.series === undefined ? (
               bookComps
             ) : (
               <div
