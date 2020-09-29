@@ -412,7 +412,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       lastUpdated: new Date(Date.now()).toString(),
       books,
     },
-    unstable_revalidate: 15,
+    revalidate: 15,
   };
 };
 

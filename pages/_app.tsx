@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
         <Header />
         <div className="relative flex-1 w-full">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="flex flex-col max-h-full overflow-y-auto">
+            <div className="flex flex-col h-full max-h-full overflow-y-auto">
               <Component {...pageProps} />
             </div>
           </div>
